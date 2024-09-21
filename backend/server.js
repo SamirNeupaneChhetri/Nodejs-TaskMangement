@@ -8,6 +8,11 @@ connectDB()
 
 const app = express()
 
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+
+
 const PORT = process.env.PORT;
 
 app.get('/', (req, res) => {

@@ -11,8 +11,19 @@ const getAllTask = async (req, res) => {
 }
 
 
-const createTask = (req, res) => {
-    res.send('create task')
+const createTask = async (req, res) => {
+    try {
+        const { name } = req.body;
+        if(!name){
+            return res.status(400).send({ error: "Name is required" });
+        }
+        const newTask = new Task({ name })
+        await newTask.save()
+        res.status(201).send(newTask);
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({'Message': "Server Error."});
+    }
 }
 
 const getTask = (req, res) => {
