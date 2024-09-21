@@ -26,8 +26,18 @@ const createTask = async (req, res) => {
     }
 }
 
-const getTask = (req, res) => {
-    res.send('GetTask')
+const getTask = async (req, res) => {
+    try {
+        const {id: taskID} = req.params;
+        const task = await Task.findById(taskID)
+        if (!task) {
+            return res.status(404).json({ error: "Task not found" }); // If no task is found, respond with 404
+        }
+        res.status(200).json(task);
+    } catch (error) {
+        console.log(error); // Log any errors
+        res.status(500).json({ Message: "Server Error" });
+    }
 }
 
 const updateTask = (req, res) => {
