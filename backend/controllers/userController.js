@@ -1,8 +1,15 @@
-const s = require('../models/userModel')
+const Task = require('../models/userModel')
 
-const getAllTask = (req, res) => {
-    res.send('getAllTask');
+const getAllTask = async (req, res) => {
+    try {
+        const getTask = await Task.find();
+        res.status(200).json(getTask);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({'Message': "Server Error."});
+    }
 }
+
 
 const createTask = (req, res) => {
     res.send('create task')
